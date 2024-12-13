@@ -7,11 +7,7 @@ import { RE_FETCH_INTERVAL } from '../../constants';
 import { useGroup } from '../../hooks';
 import { GroupCrypto, GroupFilters, GroupPeriod } from '../../types';
 
-export const GroupsPage = ({
-  address,
-}: {
-  address: string | `0x${string}` | null;
-}) => {
+export const GroupsPage = ({ address }: { address: string | null }) => {
   const [filters, setFilters] = useState<GroupFilters>({
     period: GroupPeriod.ALL,
     orderBy: '+amount',
