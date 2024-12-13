@@ -1,10 +1,8 @@
-import { ClusterUiSelect } from '@/components/cluster/cluster-ui';
-import { WalletButton } from '@/components/solana/solana-provider';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-export const MainTabsHeader = () => {
+export const MainHeader = ({ walletButtons }: { walletButtons: ReactNode }) => {
   return (
     <div className="text-white text-3xl text-center flex justify-around items-center gap-2 pt-6 pb-2 lg:hidden">
       <div className="flex flex-1 flex-wrap justify-between items-center">
@@ -20,8 +18,7 @@ export const MainTabsHeader = () => {
           </span>
         </Link>
         <div className="flex-none space-x-1 flex wallets-buttons">
-          <WalletButton />
-          <ClusterUiSelect />
+          {walletButtons}
         </div>
       </div>
     </div>

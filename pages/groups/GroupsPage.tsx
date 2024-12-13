@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { GroupFiltersHead, ListGroups, MainTabsHeader } from '../../components';
+import { GroupFiltersHead, ListGroups } from '../../components';
 import { RE_FETCH_INTERVAL } from '../../constants';
 import { useGroup } from '../../hooks';
 import { GroupCrypto, GroupFilters, GroupPeriod } from '../../types';
@@ -33,7 +33,6 @@ export const GroupsPage = ({ address }: { address: string | null }) => {
 
   return (
     <>
-      <MainTabsHeader />
       <GroupFiltersHead filters={filters} setFilters={setFilters} />
       <ListGroups groups={groups} loading={loading} />
     </>

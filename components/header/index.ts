@@ -1,2 +1,2 @@
-export * from './MainTabsHeader';
+export * from './MainHeader';
 export * from './TabTitleHeader';
