@@ -6,17 +6,17 @@ import HowItWorks from './HowItWorks';
 
 export const Home = ({
   walletButtons,
-  connected,
+  isConnected,
   walletButton,
 }: {
   walletButton: ReactNode;
   walletButtons: ReactNode;
-  connected: boolean;
+  isConnected: boolean;
 }) => {
   return (
     <div className="flex flex-col bg-bg-100">
       <Header walletButtons={walletButtons} />
-      <HeroSection connected={connected} walletButton={walletButton} />
+      <HeroSection isConnected={isConnected} walletButton={walletButton} />
       <HowItWorks />
       {/* <TeamSection /> */}
       <Footer />

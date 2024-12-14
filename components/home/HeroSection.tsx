@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { ReactNode } from 'react';
 
 const HeroSection = ({
-  connected,
+  isConnected,
   walletButton,
 }: {
-  connected: boolean;
+  isConnected: boolean;
   walletButton: ReactNode;
 }) => {
   return (
@@ -16,7 +16,7 @@ const HeroSection = ({
         Join a community savings protocol powered by blockchain technology.
         {/* Contribute to a shared pool and earn bigger rewards the longer you stay. */}
       </p>
-      {!connected ? (
+      {!isConnected ? (
         <div className="py-2 px-6 flex flex-col items-center ">
           {walletButton}
         </div>
