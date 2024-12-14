@@ -1,6 +1,5 @@
 'use client';
 
-import Tabs from '@/components/global/Tabs/TabsComponent';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -14,6 +13,7 @@ import {
   GroupPeriod,
   GroupStatus,
 } from '../../types';
+import { Tabs } from '../tabs';
 import { GroupFiltersHead } from './GroupFiltersHead';
 import { ListGroups } from './ListGroups';
 
