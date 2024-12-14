@@ -1,5 +1,5 @@
-import { GroupResponseDTO } from '@/types';
 import { QueryObserverBaseResult } from '@tanstack/react-query';
+import { AddressType, GroupResponseDTO } from '../../types';
 
 export interface GroupTablePaymentItem {
   round: number;
@@ -11,4 +11,5 @@ export interface GroupTablePaymentItem {
 export interface GroupTablePaymentsProps {
   group: GroupResponseDTO;
   refetch: QueryObserverBaseResult['refetch'];
+  address: AddressType;
 }

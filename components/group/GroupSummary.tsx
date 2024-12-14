@@ -1,7 +1,7 @@
-import Summary from '@/components/Summary/Summary';
-import { GroupCrypto, GroupStatus } from '@/types';
-import { getRelativeTime } from '@/utils/time';
+import { getRelativeTime } from '@/vaquita-ui-submodule/helpers';
 import React from 'react';
+import { GroupCrypto, GroupStatus } from '../../types';
+import { Summary } from '../Summary';
 
 export const GroupSummary = ({
   crypto,

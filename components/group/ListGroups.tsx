@@ -1,8 +1,8 @@
-import { GroupResponseDTO } from '@/types';
 import Image from 'next/image';
 import React from 'react';
+import { GroupResponseDTO } from '../../types';
 import { LoadingSpinner } from '../loadingSpinner';
-import GroupCard from './GroupCard/GroupCard';
+import { GroupCard } from './GroupCard';
 
 export const ListGroups = ({
   loading,

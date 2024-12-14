@@ -1,3 +1,3 @@
-export * from './GroupFiltersHead';
-export * from './GroupSummary';
-export * from './ListGroups';
+export * from './GroupPaymentsPage';
+export * from './GroupsPage';
+export * from './GroupViewPage';

@@ -1,9 +1,9 @@
 'use client';
 
-import ButtonComponent from '@/components/global/ButtonComponent/ButtonComponent';
-import { GroupCrypto, GroupStatus } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
+import { GroupCrypto, GroupStatus } from '../../types';
+import { Button } from '../buttons';
 
 interface Props {
   groupId: string;
@@ -17,7 +17,7 @@ interface Props {
   status: GroupStatus;
 }
 
-export default function GroupCard({
+export function GroupCard({
   name,
   amount,
   startsOnTimestamp,
@@ -73,7 +73,7 @@ export default function GroupCard({
           passHref
           style={{ display: 'contents' }}
         >
-          <ButtonComponent
+          <Button
             label="View"
             type="outline-primary"
             onClick={() => handleViewDetails(groupId)}

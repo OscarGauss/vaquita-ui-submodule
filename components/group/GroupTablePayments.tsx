@@ -1,28 +1,25 @@
-import ButtonComponent from '@/components/global/ButtonComponent/ButtonComponent';
-import ErrorView from '@/components/global/Error/ErrorView';
-import { getPaymentsTable } from '@/helpers';
-import { useGroup, useVaquinhaDeposit } from '@/hooks';
-import { LogLevel } from '@/types';
-import { showNotification } from '@/utils/commons';
-import { logError } from '@/utils/log';
-import LoadingSpinner from '@/vaquita-ui-submodule/components/loadingSpinner/LoadingSpinner';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useVaquitaDeposit } from '@/web3/hooks';
 import React, { useState } from 'react';
-import { GroupTablePaymentsProps } from './GroupTablePayments.types';
+import { getPaymentsTable, logError, showNotification } from '../../helpers';
+import { useGroup } from '../../hooks';
+import { Button } from '../buttons';
+import { ErrorView } from '../error';
+import { LoadingSpinner } from '../loadingSpinner';
+import { GroupTablePaymentsProps } from './types';
 
-export default function GroupTablePayments({
+export function GroupTablePayments({
   group,
   refetch,
+  address,
 }: GroupTablePaymentsProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const { publicKey } = useWallet();
-  const { depositRoundPayment } = useVaquinhaDeposit();
+  const { depositRoundPayment } = useVaquitaDeposit();
   const { depositGroupPayment } = useGroup();
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
-  if (!publicKey) {
+  if (!address) {
     return <ErrorView />;
   }
 
@@ -45,14 +42,14 @@ export default function GroupTablePayments({
       const amount = group.amount;
       const { tx, error, success } = await depositRoundPayment(group, turn);
       if (!success) {
-        logError(LogLevel.INFO)(error);
+        logError('transaction error', error);
         throw new Error('transaction error');
       }
-      await depositGroupPayment(group.id, publicKey, tx, round, amount);
+      await depositGroupPayment(group.id, address, tx, round, amount);
       await refetch();
       showNotification("Payment successful! You've paid your turn.", 'success');
     } catch (error) {
-      logError(LogLevel.INFO)(error);
+      logError('Payment unsuccessful. Please check and try again.', error);
       showNotification(
         'Payment unsuccessful. Please check and try again.',
         'error'
@@ -90,7 +87,7 @@ export default function GroupTablePayments({
               ) : round === group.myPosition ? (
                 "It's your round"
               ) : (
-                <ButtonComponent
+                <Button
                   label={status}
                   type={getStatusType(status)}
                   onClick={() => handleTurnPayment(round, i)}

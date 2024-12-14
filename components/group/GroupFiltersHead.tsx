@@ -1,17 +1,15 @@
-import { InputSelect } from '@/components/global/form';
-import { CurrencyInputText } from '@/components/global/form/InputCurrency/InputCurrency';
-import { GroupCrypto, GroupFilters, GroupPeriod } from '@/types';
-import React, { Dispatch, SetStateAction } from 'react';
 import {
   Modal,
-  ModalContent,
-  ModalHeader,
   ModalBody,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
-
+import React, { Dispatch, SetStateAction } from 'react';
 import { FiFilter } from 'react-icons/fi';
+import { GroupCrypto, GroupFilters, GroupPeriod } from '../../types';
+import { CurrencyInputText, InputSelect } from '../form';
 
 const sortingOptions = [
   {
