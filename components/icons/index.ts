@@ -1,6 +1,12 @@
 export * from './DashboardActiveIcon';
 export * from './DashboardIcon';
+export * from './FindGroupsIcon';
 export * from './GroupsActiveIcon';
 export * from './GroupsIcon';
+export * from './HomeIcon';
+export * from './MoreIcon';
 export * from './MyGroupsActiveIcon';
+// export * from './_MyGroupsIcon';
 export * from './MyGroupsIcon';
+export * from './OnRampIcon';
+export * from './UserEmpty';

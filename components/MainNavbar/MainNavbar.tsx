@@ -6,58 +6,12 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { ReactNode } from 'react';
 import { Button } from '../buttons';
 import {
-  DashboardActiveIcon,
-  DashboardIcon,
-  GroupsActiveIcon,
-  GroupsIcon,
-  MyGroupsActiveIcon,
+  FindGroupsIcon,
+  HomeIcon,
+  MoreIcon,
   MyGroupsIcon,
-} from './icons';
-
-const getIcon = (label: string, isActive: boolean) => {
-  switch (label) {
-    case 'Join Group':
-      return isActive ? <GroupsActiveIcon /> : <GroupsIcon />;
-    case 'My Groups':
-      return isActive ? <MyGroupsActiveIcon /> : <MyGroupsIcon />;
-    case 'On-ramp':
-      return isActive ? (
-        <Image
-          src="/icons/on-ramp-active.svg"
-          alt="On-ramp Active"
-          width={30}
-          height={30}
-        />
-      ) : (
-        <Image
-          src="/icons/on-ramp-disabled.svg"
-          alt="On-ramp Disabled"
-          width={30}
-          height={30}
-        />
-      );
-    case 'Profile':
-      return isActive ? (
-        <Image
-          src="/icons/profile-active.svg"
-          alt="Profile Active"
-          width={24}
-          height={24}
-        />
-      ) : (
-        <Image
-          src="/icons/profile-disabled.svg"
-          alt="Profile Disabled"
-          width={24}
-          height={24}
-        />
-      );
-    case 'Dashboard':
-      return isActive ? <DashboardActiveIcon /> : <DashboardIcon />;
-    default:
-      return null;
-  }
-};
+  OnRampIcon,
+} from '../icons';
 
 export const MainNavbar = ({ walletButtons }: { walletButtons: ReactNode }) => {
   const pathname = usePathname();
@@ -66,26 +20,58 @@ export const MainNavbar = ({ walletButtons }: { walletButtons: ReactNode }) => {
   const myGroups = useSearchParams().get('myGroups');
   const router = useRouter();
 
-  const links: { label: string; path: string; isActive: boolean }[] = [
+  const links: {
+    label: string;
+    path: string;
+    isActive: boolean;
+    icon: (props: { isActive: boolean }) => ReactNode;
+  }[] = [
     {
-      label: 'Join Group',
+      label: 'Home',
+      path: '/home',
+      isActive: mainPath === '/home',
+      icon: ({ isActive }) => (
+        <HomeIcon fill={isActive ? '#F7BC5C' : '#B5B5B5'} />
+      ),
+    },
+    {
+      label: 'Find groups',
       path: '/groups',
       isActive: myGroups !== 'true' && mainPath === '/groups',
+      icon: ({ isActive }) => (
+        <FindGroupsIcon fill={isActive ? '#F7BC5C' : '#B5B5B5'} />
+      ),
     },
     {
-      label: 'My Groups',
+      label: 'My groups',
       path: '/my-groups',
       isActive: myGroups === 'true' || mainPath === '/my-groups',
+      icon: ({ isActive }) => (
+        <MyGroupsIcon fill={isActive ? '#F7BC5C' : '#B5B5B5'} />
+      ),
     },
     {
-      label: 'Dashboard',
-      path: '/dashboard',
-      isActive: mainPath === '/dashboard',
+      label: 'On-ramp',
+      path: '/on-ramp',
+      isActive: mainPath === '/on-ramp',
+      icon: ({ isActive }) => (
+        <OnRampIcon fill={isActive ? '#F7BC5C' : '#B5B5B5'} />
+      ),
+    },
+    {
+      label: 'More',
+      path: '/',
+      isActive: false,
+      icon: ({ isActive }) => (
+        <MoreIcon
+          fill={isActive ? 'var(--color-accent)' : 'var(--color-text-lightest)'}
+        />
+      ),
     },
   ];
 
   return (
-    <nav className="bottom-0 w-full bg-bg-100 text-white shadow-top-custom lg:rounded-full lg:shadow-bottom-custom lg:flex lg:items-center lg:gap-6 lg:px-4">
+    <nav className="bottom-0 w-full style-bg-accent-dark text-white shadow-top-custom lg:rounded-full lg:shadow-bottom-custom lg:flex lg:items-center lg:gap-6 lg:px-4">
       <div className="flex items-center flex-1 gap-6">
         <Link className="hidden lg:flex gap-0.5" href={'/'}>
           <Image
@@ -99,7 +85,7 @@ export const MainNavbar = ({ walletButtons }: { walletButtons: ReactNode }) => {
           </span>
         </Link>
         <ul className="h-20 flex justify-around items-center pt-5 pb-3 flex-1 lg:gap-4 lg:justify-start">
-          {links.map(({ label, path, isActive }) => {
+          {links.map(({ label, path, isActive, icon }) => {
             return (
               <li
                 key={label}
@@ -108,10 +94,10 @@ export const MainNavbar = ({ walletButtons }: { walletButtons: ReactNode }) => {
                 <Link
                   href={path}
                   className={`flex flex-col lg:flex-row lg:gap-1 items-center transition-colors duration-500 ${
-                    isActive ? 'text-primary-200' : 'text-gray-400'
+                    isActive ? 'c-accent' : 'c-text-lightest'
                   }`}
                 >
-                  {getIcon(label, isActive)}
+                  {icon({ isActive })}
                   <span>{label}</span>
                 </Link>
               </li>

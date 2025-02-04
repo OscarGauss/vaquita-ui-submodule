@@ -14,7 +14,6 @@ import {
   GroupStatus,
 } from '../../types';
 import { Tabs } from '../tabs';
-import { GroupFiltersHead } from './GroupFiltersHead';
 import { ListGroups } from './ListGroups';
 
 enum MyGroupsTab {
@@ -72,7 +71,7 @@ export const MyGroupsPage = ({ address }: { address?: AddressType }) => {
   return (
     <>
       <Tabs tabs={tabs} onTabClick={setCurrentTab} currentTab={currentTab} />
-      <GroupFiltersHead filters={filters} setFilters={setFilters} />
+      {/*<GroupFiltersHead filters={filters} setFilters={setFilters} />*/}
       {!loading && (
         <div className="absolute w-full flex justify-center bottom-16 left-0 lg:hidden">
           <div onClick={() => router.push('/my-groups/create')}>

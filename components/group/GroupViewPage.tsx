@@ -13,12 +13,13 @@ import {
 import { useGroup } from '../../hooks';
 import { AddressType, GroupResponseDTO, GroupStatus } from '../../types';
 import { Button, ShareButton } from '../buttons';
-import { TabTitleHeader } from '../header';
+import { ErrorView } from '../error';
 import { LoadingSpinner } from '../loadingSpinner';
 import { Message } from '../message';
 import { BuildingStatus } from '../status';
 import { SummaryAction } from '../summaryAction';
-import { GroupSummary } from './GroupSummary';
+import { GroupCard } from './GroupCard';
+import { GroupTablePayments } from './GroupTablePayments';
 
 export const GroupViewPage = ({ address }: { address?: AddressType }) => {
   const router = useRouter();
@@ -54,6 +55,9 @@ export const GroupViewPage = ({ address }: { address?: AddressType }) => {
 
   const loading = isPendingData || isLoadingData || isFetchingData;
 
+  if (!address) {
+    return <ErrorView />;
+  }
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -190,11 +194,12 @@ export const GroupViewPage = ({ address }: { address?: AddressType }) => {
 
   return (
     <>
-      <TabTitleHeader text="Group Information" />
+      {/*<TabTitleHeader text="Group Information" />*/}
       {loading && <LoadingSpinner />}
       {!loading && data && (
         <div className="flex flex-col gap-2">
-          {data && <GroupSummary {...group} />}
+          {data && <GroupCard {...group} />}
+          {/*{data && <GroupSummary {...group} />}*/}
           {!isActive && !isConcluded && group.slots > 0 && (
             <BuildingStatus
               value1={step1}
@@ -376,6 +381,15 @@ export const GroupViewPage = ({ address }: { address?: AddressType }) => {
               }}
             /> */}
           </div>
+          {!loading && data && (
+            <div className="rounded-lg overflow-hidden">
+              <GroupTablePayments
+                address={address}
+                group={data?.content}
+                refetch={refetch}
+              />
+            </div>
+          )}
         </div>
       )}
     </>
