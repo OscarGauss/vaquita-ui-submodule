@@ -1,3 +1,25 @@
+.style-stand-out {
+  background-color: #FFFBF5;
+  color: #000000;
+}
+
+.style-border {
+  border: 1px solid #000000;
+  border-bottom: 2px solid #000000;
+}
+
+.style-primary-button {
+  background: #FF9B00;
+  border: 1px solid #000000;
+  border-bottom: 4px solid #000000;
+  font-weight: bold;
+}
+
+.color-secondary {
+  color: #4E4C4C;
+}
+
+/*OLD*/
 :root {
   --color-text: #191001;
   --color-text-light: #656466;

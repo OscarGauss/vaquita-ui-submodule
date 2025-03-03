@@ -121,4 +121,7 @@ export interface GroupFilters {
   orderBy: string;
   crypto: GroupCrypto;
   amount: number;
+  pending: boolean;
+  active: boolean;
+  completed: boolean;
 }

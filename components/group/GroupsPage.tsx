@@ -19,6 +19,9 @@ export const GroupsPage = ({ address }: { address?: AddressType }) => {
     orderBy: '+amount',
     crypto: GroupCrypto.USDC,
     amount: 0,
+    pending: false,
+    active: false,
+    completed: false,
   });
   const { getGroups } = useGroup();
   const { isPending, isLoading, data } = useQuery({

@@ -53,14 +53,16 @@ export const ListGroups = ({
                 period,
                 status,
                 slots,
+                collateralAmount,
               }) => (
                 <div key={id}>
                   <GroupCard
-                    groupId={id}
+                    id={id}
                     startsOnTimestamp={startsOnTimestamp}
                     totalMembers={totalMembers}
                     slots={slots}
                     amount={amount}
+                    collateralAmount={collateralAmount}
                     crypto={crypto}
                     name={name}
                     period={period}

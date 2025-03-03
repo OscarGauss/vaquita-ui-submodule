@@ -11,7 +11,7 @@ export function MainLayout({
 }) {
   return (
     <div className="h-full flex justify-center" style={{ cursor: 'pointer' }}>
-      <div className="w-full h-full bg flex flex-col">
+      <div className="w-full h-full flex flex-col bg-gradient-to-r from-blue-100 to-purple-200">
         <div
           className="hidden lg:block z-10 my-6 rounded-full px-6 xl:px-36"
           // style={{ maxHeight: 'calc(100vh - 5rem)' }}

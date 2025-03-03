@@ -1,5 +1,6 @@
 'use client';
 
+import { GroupFiltersHead } from '@/vaquita-ui-submodule/components/group/GroupFiltersHead';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -13,7 +14,6 @@ import {
   GroupPeriod,
   GroupStatus,
 } from '../../types';
-import { Tabs } from '../tabs';
 import { ListGroups } from './ListGroups';
 
 enum MyGroupsTab {
@@ -38,6 +38,9 @@ export const MyGroupsPage = ({ address }: { address?: AddressType }) => {
     orderBy: '+amount',
     crypto: GroupCrypto.USDC,
     amount: 0,
+    pending: false,
+    active: false,
+    completed: false,
   });
   const { getGroups } = useGroup();
   const { isPending, isLoading, isFetching, data } = useQuery({
@@ -70,7 +73,8 @@ export const MyGroupsPage = ({ address }: { address?: AddressType }) => {
 
   return (
     <>
-      <Tabs tabs={tabs} onTabClick={setCurrentTab} currentTab={currentTab} />
+      {/*<Tabs tabs={tabs} onTabClick={setCurrentTab} currentTab={currentTab} />*/}
+      <GroupFiltersHead filters={filters} setFilters={setFilters} />
       {/*<GroupFiltersHead filters={filters} setFilters={setFilters} />*/}
       {!loading && (
         <div className="absolute w-full flex justify-center bottom-16 left-0 lg:hidden">

@@ -5,13 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { ReactNode } from 'react';
 import { Button } from '../buttons';
-import {
-  FindGroupsIcon,
-  HomeIcon,
-  MoreIcon,
-  MyGroupsIcon,
-  OnRampIcon,
-} from '../icons';
+import { FindGroupsIcon, HomeIcon, MoreIcon, MyGroupsIcon } from '../icons';
 
 export const MainNavbar = ({ walletButtons }: { walletButtons: ReactNode }) => {
   const pathname = usePathname();
@@ -19,6 +13,7 @@ export const MainNavbar = ({ walletButtons }: { walletButtons: ReactNode }) => {
   const mainPath = '/' + pathSegments[0];
   const myGroups = useSearchParams().get('myGroups');
   const router = useRouter();
+  const getIconColor = (isActive: boolean) => 'currentColor';
 
   const links: {
     label: string;
@@ -30,48 +25,38 @@ export const MainNavbar = ({ walletButtons }: { walletButtons: ReactNode }) => {
       label: 'Home',
       path: '/home',
       isActive: mainPath === '/home',
-      icon: ({ isActive }) => (
-        <HomeIcon fill={isActive ? '#F7BC5C' : '#B5B5B5'} />
-      ),
+      icon: ({ isActive }) => <HomeIcon fill={getIconColor(isActive)} />,
     },
     {
       label: 'Find groups',
       path: '/groups',
       isActive: myGroups !== 'true' && mainPath === '/groups',
-      icon: ({ isActive }) => (
-        <FindGroupsIcon fill={isActive ? '#F7BC5C' : '#B5B5B5'} />
-      ),
+      icon: ({ isActive }) => <FindGroupsIcon fill={getIconColor(isActive)} />,
     },
     {
       label: 'My groups',
       path: '/my-groups',
       isActive: myGroups === 'true' || mainPath === '/my-groups',
-      icon: ({ isActive }) => (
-        <MyGroupsIcon fill={isActive ? '#F7BC5C' : '#B5B5B5'} />
-      ),
+      icon: ({ isActive }) => <MyGroupsIcon fill={getIconColor(isActive)} />,
     },
-    {
-      label: 'On-ramp',
-      path: '/on-ramp',
-      isActive: mainPath === '/on-ramp',
-      icon: ({ isActive }) => (
-        <OnRampIcon fill={isActive ? '#F7BC5C' : '#B5B5B5'} />
-      ),
-    },
+    // {
+    //   label: 'On-ramp',
+    //   path: '/on-ramp',
+    //   isActive: mainPath === '/on-ramp',
+    //   icon: ({ isActive }) => (
+    //     <OnRampIcon fill={getIconColor(isActive)} />
+    //   ),
+    // },
     {
       label: 'More',
       path: '/',
       isActive: false,
-      icon: ({ isActive }) => (
-        <MoreIcon
-          fill={isActive ? 'var(--color-accent)' : 'var(--color-text-lightest)'}
-        />
-      ),
+      icon: ({ isActive }) => <MoreIcon fill={getIconColor(isActive)} />,
     },
   ];
 
   return (
-    <nav className="bottom-0 w-full style-bg-accent-dark text-white shadow-top-custom lg:rounded-full lg:shadow-bottom-custom lg:flex lg:items-center lg:gap-6 lg:px-4">
+    <nav className="bottom-0 w-full style-stand-out dark shadow-top-custom lg:rounded-full lg:shadow-bottom-custom lg:flex lg:items-center lg:gap-6 lg:px-4">
       <div className="flex items-center flex-1 gap-6">
         <Link className="hidden lg:flex gap-0.5" href={'/'}>
           <Image
@@ -94,11 +79,21 @@ export const MainNavbar = ({ walletButtons }: { walletButtons: ReactNode }) => {
                 <Link
                   href={path}
                   className={`flex flex-col lg:flex-row lg:gap-1 items-center transition-colors duration-500 ${
-                    isActive ? 'c-accent' : 'c-text-lightest'
+                    // isActive ? 'c-accent' : 'c-text-lightest'
+                    ''
                   }`}
                 >
-                  {icon({ isActive })}
-                  <span>{label}</span>
+                  <div
+                    className={
+                      'flex flex-col items-center justify-center w-100 h-16  w-full rounded-xl text-xs' +
+                      (isActive
+                        ? ' bg-[#E8DFFC] border border-black border-b-2'
+                        : '')
+                    }
+                  >
+                    {icon({ isActive })}
+                    <span>{label}</span>
+                  </div>
                 </Link>
               </li>
             );
