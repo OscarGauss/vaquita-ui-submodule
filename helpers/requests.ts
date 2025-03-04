@@ -88,12 +88,13 @@ export const cleanRequest = <
     // jukiApiManager.reportError({ message: 'success false on cleaning request', responseText, response });
     return response;
   }
-  const responseJson = JSON.parse(responseText, (key, value) => {
-    if (typeof value === 'string' && /^\d{16,}$/.test(value)) {
-      return BigInt(value);
-    }
-    return value;
-  });
+  // const responseJson = JSON.parse(responseText, (key, value) => {
+  //   if (typeof value === 'string' && /^\d{16,}$/.test(value)) {
+  //     return BigInt(value);
+  //   }
+  //   return value;
+  // });
+  const responseJson = JSON.parse(responseText);
   if (typeof responseJson.success === 'boolean') {
     if (
       responseJson.success === true &&

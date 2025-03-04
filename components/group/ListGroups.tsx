@@ -1,4 +1,4 @@
-import { UserEmptyIcon } from '@/vaquita-ui-submodule/components/icons';
+import { VaquitaParachute } from '@/vaquita-ui-submodule/components/icons';
 import React from 'react';
 import { GroupResponseDTO } from '../../types';
 import { LoadingSpinner } from '../loadingSpinner';
@@ -20,7 +20,7 @@ export const ListGroups = ({
       {loading && <LoadingSpinner />}
       {isEmpty && (
         <div className="flex flex-col items-center justify-center py-8 h-3/4">
-          <UserEmptyIcon fill={'var(--color-accent-light)'} />
+          <VaquitaParachute />
           <p className="text-center">
             {myGroups ? (
               <>

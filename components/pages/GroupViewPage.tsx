@@ -14,22 +14,20 @@ import { useGroup } from '../../hooks';
 import { AddressType, GroupResponseDTO, GroupStatus } from '../../types';
 import { Button, ShareButton } from '../buttons';
 import { ErrorView } from '../error';
+import { GroupCard } from '../group/GroupCard';
+import { GroupTablePayments } from '../group/GroupTablePayments';
 import { LoadingSpinner } from '../loadingSpinner';
 import { Message } from '../message';
 import { BuildingStatus } from '../status';
 import { SummaryAction } from '../summaryAction';
-import { GroupCard } from './GroupCard';
-import { GroupTablePayments } from './GroupTablePayments';
 
 export const GroupViewPage = ({ address }: { address?: AddressType }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { groupId } = useParams();
   const { depositCollateralAndJoin } = useVaquitaDeposit();
-  const {
-    withdrawalTurn,
-    withdrawalFunds,
-  } = useVaquitaWithdrawal();
+  const { withdrawalEarnedRound, withdrawalCollateralAndEarnedInterest } =
+    useVaquitaWithdrawal();
   const {
     getGroup,
     joinGroup,
@@ -109,7 +107,7 @@ export const GroupViewPage = ({ address }: { address?: AddressType }) => {
     }
     try {
       const amount = group.amount;
-      const { tx, error, success } = await withdrawalTurn(group);
+      const { tx, error, success } = await withdrawalEarnedRound(group);
       if (!success) {
         logError('transaction error', error);
         throw new Error('transaction error');
@@ -133,7 +131,8 @@ export const GroupViewPage = ({ address }: { address?: AddressType }) => {
       return;
     }
     try {
-      const { tx, error, success } = await withdrawalFunds(group);
+      const { tx, error, success } =
+        await withdrawalCollateralAndEarnedInterest(group);
       if (!success) {
         logError('transaction error', error);
         throw new Error('transaction error');

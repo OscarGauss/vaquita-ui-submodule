@@ -14,7 +14,7 @@ import {
 } from '@nextui-org/react';
 import React, { Dispatch, SetStateAction } from 'react';
 import { GroupFilters, GroupPeriod } from '../../types';
-import { InputSelect } from '../form';
+import { InputSelect, RangeSlider } from '../form';
 
 const sortingOptions = [
   {
@@ -54,7 +54,7 @@ const sortingOptions = [
 const periodOptions = [
   {
     text: 'All Period',
-    value: GroupPeriod.ALL,
+    value: null,
   },
   {
     text: 'Monthly',
@@ -109,9 +109,11 @@ export default function CloseButton({ onClick }: { onClick: () => void }) {
 }
 
 export const GroupFiltersHead = ({
+  withStatus,
   filters,
   setFilters,
 }: {
+  withStatus?: boolean;
   filters: GroupFilters;
   setFilters: Dispatch<SetStateAction<GroupFilters>>;
 }) => {
@@ -130,40 +132,28 @@ export const GroupFiltersHead = ({
     setFilters((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const toggleSort = (key: string) => {
-    setFilters((prev) => ({ ...prev, orderBy: prev.orderBy }));
-  };
-
   return (
     <div className="flex gap-2 justify-center items-center py-2">
       <input
-        className="w-full h-[40px] px-4 border border-black rounded-xl bg-transparent text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
-        // className={
-        //   'flex-1 bg-transparent outline-0 text-accent-100 text-base ' +
-        //   // SIZE[size]
-        //   ''
-        // }
+        className="w-full h-[30px] px-4 border border-black rounded-xl bg-transparent text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
         min={0}
         placeholder="Search by name"
-        // id={id}
-        autoComplete={'off'}
+        autoComplete="off"
         onChange={({ target }) =>
           setFilters((prevState) => ({ ...prevState, name: target.value }))
         }
-        type="number"
-        // style={{ width: 24 }}
       />
       <button className="block md:hidden text-xl" onClick={onOpenSort}>
-        <BiSortOutlineIcon />
+        <BiSortOutlineIcon size={30} />
       </button>
       <button className="block md:hidden text-xl" onClick={onOpenFilter}>
-        <FilterOutlineIcon />
+        <FilterOutlineIcon size={30} />
       </button>
       <div className="hidden md:flex gap-2 w-1/4">
-        <InputSelect<GroupPeriod>
+        <InputSelect<GroupPeriod | null>
           label="Filter by period"
           options={periodOptions}
-          value={filters.period}
+          value={filters.period ?? undefined}
           onChange={(period) =>
             setFilters((prevState) => ({ ...prevState, period }))
           }
@@ -175,7 +165,7 @@ export const GroupFiltersHead = ({
         <InputSelect
           label="Order by"
           options={sortingOptions}
-          value={filters.orderBy}
+          value={filters.orderBy ?? undefined}
           onChange={(orderBy) =>
             setFilters((prevState) => ({ ...prevState, orderBy }))
           }
@@ -276,41 +266,28 @@ export const GroupFiltersHead = ({
                 <CloseButton onClick={onClose} />
               </ModalHeader>
               <ModalBody>
-                <div className="flex justify-between text-sm">
-                  <span>10$</span>
-                  <span>1000$</span>
-                </div>
-                <input
-                  type="range"
-                  min="10"
-                  max="1000"
-                  step="10"
-                  value={filters.amount}
-                  onChange={(e) =>
+                <RangeSlider
+                  min={10}
+                  max={1000}
+                  minValue={filters.minAmount ?? 10}
+                  maxValue={filters.maxAmount ?? 1000}
+                  step={10}
+                  onChange={(minValue, maxValue) =>
                     setFilters((prevState) => ({
                       ...prevState,
-                      amount: Number(e.target.value),
+                      minAmount: minValue,
+                      maxAmount: maxValue,
                     }))
                   }
-                  className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-400"
-                  style={{
-                    background: `linear-gradient(to right, orange ${
-                      (filters.amount - 10) / 9.9
-                    }%, #D1D5DB ${(filters.amount - 10) / 9.9}%)`,
-                  }}
                 />
-                <div className="flex justify-between text-sm">
-                  <span>20%</span>
-                  <span className="font-bold">
-                    {Math.round((filters.amount / 1000) * 100)}%
-                  </span>
-                  <span>80%</span>
-                </div>
-                {[
-                  { label: 'Pending rounds', key: 'pending' },
-                  { label: 'Active rounds', key: 'active' },
-                  { label: 'Completed rounds', key: 'completed' },
-                ].map(({ label, key }) => (
+                {(withStatus
+                  ? [
+                      { label: 'Pending rounds', key: 'pending' },
+                      { label: 'Active rounds', key: 'active' },
+                      { label: 'Completed rounds', key: 'completed' },
+                    ]
+                  : []
+                ).map(({ label, key }) => (
                   <div key={key} className="flex justify-between items-center">
                     <span className="text-sm">{label}</span>
                     <button

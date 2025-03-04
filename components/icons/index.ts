@@ -19,3 +19,4 @@ export * from './PeopleOutlineIcon';
 export * from './RenewOutlineIcon';
 export * from './UserEmpty';
 export * from './VaquitaOutlineIcon';
+export * from './VaquitaParachute';

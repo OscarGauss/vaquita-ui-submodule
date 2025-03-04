@@ -49,7 +49,7 @@ export const MainNavbar = ({ walletButtons }: { walletButtons: ReactNode }) => {
     // },
     {
       label: 'More',
-      path: '/',
+      path: '/more',
       isActive: false,
       icon: ({ isActive }) => <MoreIcon fill={getIconColor(isActive)} />,
     },

@@ -1,6 +1,5 @@
 'use client';
 
-import { GroupFiltersHead } from '@/vaquita-ui-submodule/components/group/GroupFiltersHead';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -11,10 +10,10 @@ import {
   AddressType,
   GroupCrypto,
   GroupFilters,
-  GroupPeriod,
   GroupStatus,
 } from '../../types';
-import { ListGroups } from './ListGroups';
+import { GroupFiltersHead } from '../group/GroupFiltersHead';
+import { ListGroups } from '../group/ListGroups';
 
 enum MyGroupsTab {
   PENDING = GroupStatus.PENDING,
@@ -22,22 +21,18 @@ enum MyGroupsTab {
   CONCLUDED = GroupStatus.CONCLUDED,
 }
 
-const tabs = [
-  { label: 'Active', value: MyGroupsTab.ACTIVE },
-  { label: 'Pending', value: MyGroupsTab.PENDING },
-  { label: 'Concluded', value: MyGroupsTab.CONCLUDED },
-];
-
 export const MyGroupsPage = ({ address }: { address?: AddressType }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tab = searchParams.get('tab');
-  const [currentTab, setCurrentTab] = useState(tab || MyGroupsTab.ACTIVE);
   const [filters, setFilters] = useState<GroupFilters>({
-    period: GroupPeriod.ALL,
+    name: null,
+    period: null,
     orderBy: '+amount',
     crypto: GroupCrypto.USDC,
-    amount: 0,
+    amount: null,
+    minAmount: null,
+    maxAmount: null,
     pending: false,
     active: false,
     completed: false,
@@ -46,16 +41,25 @@ export const MyGroupsPage = ({ address }: { address?: AddressType }) => {
   const { isPending, isLoading, isFetching, data } = useQuery({
     refetchInterval: RE_FETCH_INTERVAL,
     enabled: !!address,
-    queryKey: ['groups', currentTab, address, filters],
+    queryKey: ['groups', address, filters],
     queryFn: () =>
       getGroups({
         myGroups: true,
         publicKey: address,
+        name: filters.name,
         crypto: filters.crypto,
         orderBy: filters.orderBy,
         amount: filters.amount,
+        minAmount: filters.minAmount,
+        maxAmount: filters.maxAmount,
         period: filters.period,
-        status: currentTab as GroupStatus,
+        status: filters.pending
+          ? GroupStatus.PENDING
+          : filters.completed
+          ? GroupStatus.CONCLUDED
+          : filters.active
+          ? GroupStatus.ACTIVE
+          : null,
       }),
   });
 

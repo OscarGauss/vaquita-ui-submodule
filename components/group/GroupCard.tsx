@@ -35,10 +35,6 @@ export function GroupCard({
   crypto,
   status,
 }: Props) {
-  const handleViewDetails = (groupId: string) => {
-    console.log(groupId);
-  };
-
   return (
     <div className="flex flex-col justify-between style-stand-out style-border px-5 pt-4 pb-6 rounded-lg gap-2">
       <p className="text-2xl font-bold">{name}</p>
@@ -82,7 +78,6 @@ export function GroupCard({
         <Button
           label="View Details"
           type="outline-primary"
-          onClick={() => handleViewDetails(id)}
           className="w-full style-primary-button hover-effect"
         />
       </Link>
